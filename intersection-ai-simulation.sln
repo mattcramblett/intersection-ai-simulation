@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{C0B99A8D-3177-07C0-2602-19F246C451B2}") = "intersection-ai-simulation", "Assembly-CSharp.csproj", "{344969B2-0574-116F-84F6-CD73EA5B8F46}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{344969B2-0574-116F-84F6-CD73EA5B8F46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{344969B2-0574-116F-84F6-CD73EA5B8F46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{344969B2-0574-116F-84F6-CD73EA5B8F46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{344969B2-0574-116F-84F6-CD73EA5B8F46}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
