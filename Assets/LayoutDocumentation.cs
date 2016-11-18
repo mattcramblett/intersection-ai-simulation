@@ -34,5 +34,9 @@ Third and Center: (10, 0, 0)
 
 
 
+CARS:
+
+All cars are scale 0.3 and should always have Y-value of 0.15 to keep above road
+
 
 */
