@@ -7,6 +7,7 @@ public class Vehicle : MonoBehaviour {
 	public string position;
 	public bool moving = true;
 	public bool stopped = false;
+	public GameObject body;
 
 	//ROAD LOCATIONS (for generating vehicles):
 	//First/left horizontal road: (-10, 20) - (-10, -20)
@@ -25,8 +26,42 @@ public class Vehicle : MonoBehaviour {
 	//Stopping points at intersections are 1.5 units from middle of intersection (in whichever direction car is coming from)
 	//Catmull-Rom curve should be from this place to 
 
+
 	public Vehicle(){
-		
+		//To determine initial position
+		int randcar = Random.Range(1,9);
+		//this.body = (GameObject)Instantiate(Resources.Load("Sports car 1"));
+		this.body = GameObject.CreatePrimitive(PrimitiveType.Sphere); // used for testing positions: positions are good 
+		int rand1 = Random.Range (0, 5);
+		body.AddComponent<Rigidbody> ();
+		//body.transform.position = new Vector3 (20, .15f, 0);
+		switch (rand1) {
+		case 0:
+			this.orientation = "up";
+			this.position = "HorizontalLeft";
+			this.body.transform.position = new Vector3 (-10, .15f, -20);
+			break;
+		case 1:
+			this.orientation = "down";
+			this.position = "HorizontalMiddle";
+			this.body.transform.position = new Vector3 (0, .15f, 20);
+			break;
+		case 2:
+			this.orientation = "up";
+			this.position = "HorizontalRight";
+			this.body.transform.position = new Vector3 (10, .15f, -20);
+			break;
+		case 3:
+			this.orientation = "right";
+			this.position = "VerticalFromLeft";
+			this.body.transform.position = new Vector3 (-20, .15f, 0);
+			break;
+		case 4:
+			this.orientation = "left";
+			this.position = "VerticalFromRight";
+			this.body.transform.position = new Vector3 (20, .15f, 0);
+			break;
+		}
 	}
 		
 	/// <summary>
@@ -80,7 +115,6 @@ public class Vehicle : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
 	}
 	
 	// Update is called once per frame

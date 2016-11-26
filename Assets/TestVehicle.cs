@@ -69,7 +69,7 @@ public class TestVehicle : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		print (this.gameObject.transform.position);
+		//print (this.gameObject.transform.position);
 	   	if(time >= 1f){
    			segmentCount++;
    			time = 0f;
