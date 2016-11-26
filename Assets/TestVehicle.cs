@@ -6,7 +6,7 @@ using System.Linq;
 public class TestVehicle : MonoBehaviour {
 
 	//Ripping off the Catmull Rom algorithm from lab 5
-	const int NumberOfPoints = 5;
+	const int NumberOfPoints = 3;
 	Vector3[] controlPoints;
 	
 	float time = 0f;
@@ -59,15 +59,17 @@ public class TestVehicle : MonoBehaviour {
 
 	void Start () {
 		controlPoints = new Vector3[NumberOfPoints];
-		controlPoints[0] = new Vector3(-20, 0.15f, 0);
-		controlPoints[1] = new Vector3(-10, 0.15f, 0);
-		controlPoints[2] = new Vector3(-10, 0.15f, 20);
-    controlPoints[3] = new Vector3(-10, 0.15f, 0);
-    controlPoints[4] = new Vector3(-20, 0.15f, 0);
+		//controlPoints[0] = new Vector3(-20, 0.15f, 0);
+		controlPoints[0] = new Vector3(-10, 0.15f, 20);
+		controlPoints[1] = new Vector3(-10, 0.15f, 5);
+    controlPoints[2] = new Vector3(-10, 0.15f, 1.5f);
+    //controlPoints[4] = new Vector3(-20, 0.15f, 0);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		
+		print (this.gameObject.transform.position);
 	   	if(time >= 1f){
    			segmentCount++;
    			time = 0f;
