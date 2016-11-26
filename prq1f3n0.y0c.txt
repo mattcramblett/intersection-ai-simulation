@@ -1,0 +1,81 @@
+﻿randomly generate vehicle (sphere for now)
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   Assets/RunIntersection.cs
+#	renamed:    Assets/Sports Car Multiple textures/Prefabs/Sports car 1.prefab -> Assets/Sports car 1.prefab
+#	renamed:    Assets/Sports Car Multiple textures/Prefabs/Sports car 1.prefab.meta -> Assets/Sports car 1.prefab.meta
+#	modified:   Assets/TestVehicle.cs
+#	modified:   Assets/Vehicle.cs
+#	modified:   Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+#	modified:   Library/ScriptAssemblies/Assembly-CSharp-Editor.dll.mdb
+#	modified:   Library/ScriptAssemblies/Assembly-CSharp.dll
+#	modified:   Library/ScriptAssemblies/Assembly-CSharp.dll.mdb
+#	modified:   Library/assetDatabase3
+#	modified:   Library/metadata/08/08237072f1dc67143871b79d47b48bc7
+#	modified:   Library/metadata/39/391b79fe8455a46b1b9bdafa185a73d6
+#	modified:   Library/metadata/53/536d02f56ec57e34ea043ea6bd2784f9
+#	modified:   Library/metadata/ee/eef5383bea502c2439e88aa1468e335b
+#	new file:   Temp/ProcessJobs/e9a6970f79cd12d8b075e7d72f1b07cb.bakert
+#
+# Untracked files:
+#	Temp/UnityLockfile
+#	Temp/UnityTempFile-035a636e986ee8143b642b5c78547c37
+#	Temp/UnityTempFile-06525a5fb570d0241a233de2c7ff56f9
+#	Temp/UnityTempFile-0c1c3220f8909d34cb75d853c292d5de
+#	Temp/UnityTempFile-0c61fd7a3169e774bbe5067cce9a36a7
+#	Temp/UnityTempFile-0ea8854cac20fe44589bd43595d67522
+#	Temp/UnityTempFile-0f63b550a32ca5b4d857719f3968d9b4
+#	Temp/UnityTempFile-1e1e291038264ac428933e59befd04d8
+#	Temp/UnityTempFile-22f731ca629d59444b59d6fc362b3488
+#	Temp/UnityTempFile-27161876df2707f4192b6e7644c71dd9
+#	Temp/UnityTempFile-2aa328813001c1a48a3d858bef856f34
+#	Temp/UnityTempFile-2ab38cfb8549fbe408850330848ba80d
+#	Temp/UnityTempFile-3e4c9d661ae22124199b4348468a8b01
+#	Temp/UnityTempFile-414f045453c96544796eabceb4baef4d
+#	Temp/UnityTempFile-4cebcac9ca646ff42aea3c6d39c23129
+#	Temp/UnityTempFile-4eb06fe4fcaef854fa4357c439048c6b
+#	Temp/UnityTempFile-553ea92ce711a8a4b975558895bbdf96
+#	Temp/UnityTempFile-581f572ad7b82714886c439eac6855d5
+#	Temp/UnityTempFile-5e1f102c6dd4f954087b1561896b1bc4
+#	Temp/UnityTempFile-5eb13486c60b56a45980a449e4e4bc75
+#	Temp/UnityTempFile-606c2cefb9172004c85b14bb3ade8e66
+#	Temp/UnityTempFile-64b5eb526f23b9244b7109bcaecfdb96
+#	Temp/UnityTempFile-65921dfc45516fc44b504e83b6d3698e
+#	Temp/UnityTempFile-6e3c40fee24f55a4796694edb4da1278
+#	Temp/UnityTempFile-73d9a86592a02d14fafd0eeb6f720420
+#	Temp/UnityTempFile-7dd454b61a429a74a9dda09f1480d340
+#	Temp/UnityTempFile-80c1ddb9121c4bb40a16093f386e9e2f
+#	Temp/UnityTempFile-81b0eeb6ca81fca42b4ca09ba9c831f5
+#	Temp/UnityTempFile-8b54810629c837f4eb5c0f5b54278ecd
+#	Temp/UnityTempFile-8e2d98de369d413438e2ea0703a7574d
+#	Temp/UnityTempFile-95f1a9fc736041944948a07d2ad91891
+#	Temp/UnityTempFile-95fe20fd0e857ca428615029f8338810
+#	Temp/UnityTempFile-988f7300b7b90ee488004997ce3c3cea
+#	Temp/UnityTempFile-9f34470ff63938943a858bf7ab4ac2e4
+#	Temp/UnityTempFile-a4c4f7627b4aa6a4696206f4fa12d61c
+#	Temp/UnityTempFile-a91a8bfa714411841b5d7bc2de8a800b
+#	Temp/UnityTempFile-aaaa32a99b455bf4295fec002ba36744
+#	Temp/UnityTempFile-ad3911702d47a0f4dbdb743f14283f5c
+#	Temp/UnityTempFile-aed699a66a2b9a34ead9eef35aaa33cd
+#	Temp/UnityTempFile-af70a498df77818488e7d80657d85241
+#	Temp/UnityTempFile-b310af5d78f74aa4f9e14436685653f8
+#	Temp/UnityTempFile-b43c80178eeb1404c8cd7a1d87459052
+#	Temp/UnityTempFile-b5958f50df4ac0a4fb52b0e62bf2af00
+#	Temp/UnityTempFile-b5c87bd8f3df0684f9e1fcdd45b84b99
+#	Temp/UnityTempFile-c8ffc995f489a514298c20a1a46fe970
+#	Temp/UnityTempFile-ca22752055c4cc54190302e373d3ebf4
+#	Temp/UnityTempFile-cf7afa61708e44d4aaefd13e0a0dbbfc
+#	Temp/UnityTempFile-d2e0e9acc4880a14281822603608f500
+#	Temp/UnityTempFile-d9133ae1c0337c04cbff92c973498ef9
+#	Temp/UnityTempFile-de3f41904b5f5a24fa12367c4cdb0567
+#	Temp/UnityTempFile-df682f2ef0ccf294083cc9e09bef7fe8
+#	Temp/UnityTempFile-ea2ca4b6eeb7f0544aa66aa4b52dcbb2
+#	Temp/UnityTempFile-f62728245cd8d8549ad666f6e87799d9
+#	Temp/__Backupscenes/
+#
+

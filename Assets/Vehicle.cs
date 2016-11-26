@@ -32,10 +32,10 @@ public class Vehicle : MonoBehaviour {
 		int randcar = Random.Range(1,9);
 		//this.body = (GameObject)Instantiate(Resources.Load("Sports car 1"));
 		this.body = GameObject.CreatePrimitive(PrimitiveType.Sphere); // used for testing positions: positions are good 
-		int rand1 = Random.Range (0, 5);
+		int randpos = Random.Range (0, 5);
 		body.AddComponent<Rigidbody> ();
 		//body.transform.position = new Vector3 (20, .15f, 0);
-		switch (rand1) {
+		switch (randpos) {
 		case 0:
 			this.orientation = "up";
 			this.position = "HorizontalLeft";
