@@ -60,9 +60,10 @@ public class TestVehicle : MonoBehaviour {
 	void Start () {
 		controlPoints = new Vector3[NumberOfPoints];
 		//controlPoints[0] = new Vector3(-20, 0.15f, 0);
-		controlPoints[0] = new Vector3(-10, 0.15f, 20);
-		controlPoints[1] = new Vector3(-10, 0.15f, 5);
-    controlPoints[2] = new Vector3(-10, 0.15f, 1.5f);
+		controlPoints[0] = new Vector3(-10, 0.15f, 0);
+		controlPoints[1] = new Vector3(-10, 0.15f, 10);
+    	controlPoints[2] = new Vector3(-20, 0.15f, 1.5f);
+        transform.position = new Vector3(-20, 0.15f, 0);
     //controlPoints[4] = new Vector3(-20, 0.15f, 0);
 	}
 	

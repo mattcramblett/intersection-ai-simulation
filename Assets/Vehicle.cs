@@ -2,13 +2,6 @@
 using System.Collections;
 
 public class Vehicle : MonoBehaviour {
-
-	public string orientation;
-	public string position;
-	public bool moving = true;
-	public bool stopped = false;
-	public GameObject body;
-
 	//ROAD LOCATIONS (for generating vehicles):
 	//First/left horizontal road: (-10, 20) - (-10, -20)
 		//Middle of intersection at (-10, 0)
@@ -26,43 +19,8 @@ public class Vehicle : MonoBehaviour {
 	//Stopping points at intersections are 1.5 units from middle of intersection (in whichever direction car is coming from)
 	//Catmull-Rom curve should be from this place to 
 
-
-	public Vehicle(){
-		//To determine initial position
-		int randcar = Random.Range(1,9);
-		//this.body = (GameObject)Instantiate(Resources.Load("Sports car 1"));
-		this.body = GameObject.CreatePrimitive(PrimitiveType.Sphere); // used for testing positions: positions are good 
-		int randpos = Random.Range (0, 5);
-		body.AddComponent<Rigidbody> ();
-		//body.transform.position = new Vector3 (20, .15f, 0);
-		switch (randpos) {
-		case 0:
-			this.orientation = "up";
-			this.position = "HorizontalLeft";
-			this.body.transform.position = new Vector3 (-10, .15f, -20);
-			break;
-		case 1:
-			this.orientation = "down";
-			this.position = "HorizontalMiddle";
-			this.body.transform.position = new Vector3 (0, .15f, 20);
-			break;
-		case 2:
-			this.orientation = "up";
-			this.position = "HorizontalRight";
-			this.body.transform.position = new Vector3 (10, .15f, -20);
-			break;
-		case 3:
-			this.orientation = "right";
-			this.position = "VerticalFromLeft";
-			this.body.transform.position = new Vector3 (-20, .15f, 0);
-			break;
-		case 4:
-			this.orientation = "left";
-			this.position = "VerticalFromRight";
-			this.body.transform.position = new Vector3 (20, .15f, 0);
-			break;
-		}
-	}
+	private Vector3 target;
+	public float speed = 2f;
 		
 	/// <summary>
 	/// Senses other cars close enough in front.
@@ -113,12 +71,93 @@ public class Vehicle : MonoBehaviour {
 		return decision;
 	}
 
+	void AssignTarget(){
+		Vector3 pos = transform.position;
+		if(pos == new Vector3(-10, 0.15f, -20) || pos == new Vector3 (-10, .15f, 20)){
+			target = new Vector3(-10, 0.15f, 0); //Intersection: First and Center
+		}else if(pos == new Vector3 (0, .15f, 20) || pos == new Vector3 (0, .15f, -20)){
+			target = new Vector3(0, 0.15f, 0); //Intersection: Second and Center
+		}else if(pos == new Vector3 (10, .15f, -20) || pos == new Vector3 (10, .15f, 20)){
+			target = new Vector3(10, 0.15f, 0); //Intersection: Third and Center
+		}else if(pos == new Vector3(-10, 0.15f, 0)){
+			//Intersection Decision case: First and Center
+			int randpos = Random.Range (0, 3);
+			switch (randpos) {
+				case 0:
+					target = new Vector3(0, 0.15f, 0); //Intersection: Second and Center
+					break;
+				case 1: 
+					target = new Vector3 (-10, .15f, -20);
+					break;
+				case 2:
+					target = new Vector3 (-10, .15f, 20);
+					break;
+			}
+		}else if(pos == new Vector3(0, 0.15f, 0)){
+			//Intersection Decision case: Second and Center
+			int randpos = Random.Range (0, 4);
+			switch (randpos) {
+				case 0:
+					target = new Vector3(-10, 0.15f, 0); //Intersection: First and Center
+					break;
+				case 1: 
+					target = new Vector3(10, 0.15f, 0); //Intersection: Third and Center
+					break;
+				case 2:
+					target = new Vector3 (0, .15f, 20);
+					break;
+				case 3:
+					target = new Vector3 (0, .15f, -20);
+					break;
+			}
+
+		}else if(pos == new Vector3(10, 0.15f, 0)){
+			//Intersection Decision case: Third and Center
+			int randpos = Random.Range (0, 3);
+			switch (randpos) {
+				case 0:
+					target = new Vector3(0, 0.15f, 0); //Intersection: Second and Center
+					break;
+				case 1: 
+					target = new Vector3 (10, .15f, -20);
+					break;
+				case 2:
+					target = new Vector3 (10, .15f, 20);
+					break;
+			}
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
+		int randpos = Random.Range (0, 5);
+		switch (randpos) {
+		case 0:
+			transform.position = new Vector3 (-10, .15f, -20); //1
+			break;
+		case 1:
+			transform.position = new Vector3 (0, .15f, 20); //2
+			break;
+		case 2:
+			transform.position = new Vector3 (10, .15f, -20); //3
+			break;
+		case 3:
+			transform.position = new Vector3 (-10, .15f, 20); //1
+			break; 
+		case 4:
+			transform.position = new Vector3 (0, .15f, -20); //2
+			break;
+		case 5:
+			transform.position = new Vector3 (10, .15f, 20); //3
+			break;
+		}
+		AssignTarget();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		transform.LookAt(target);
+		transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+		AssignTarget();
 	}
 }
