@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor;
 
 public class Vehicle : MonoBehaviour {
 
@@ -30,38 +31,45 @@ public class Vehicle : MonoBehaviour {
 	public Vehicle(){
 		//To determine initial position
 		int randcar = Random.Range(1,9);
-		//this.body = (GameObject)Instantiate(Resources.Load("Sports car 1"));
-		this.body = GameObject.CreatePrimitive(PrimitiveType.Sphere); // used for testing positions: positions are good 
+		Object prefab = AssetDatabase.LoadAssetAtPath("Assets/sports_car_1.prefab", typeof(GameObject));
+		//GameObject clone = Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
+		// Modify the clone to your heart's content
+		//this.body = clone;
+		this.body = (GameObject)Instantiate(prefab);
+		//this.body = GameObject.CreatePrimitive(PrimitiveType.Sphere); // used for testing positions: positions are good 
+		//this.body = (GameObject)prefab;
+		this.body.transform.localScale = new Vector3(.1f,.1f,.1f);
 		int randpos = Random.Range (0, 5);
-		body.AddComponent<Rigidbody> ();
+		body.AddComponent<Rigidbody> ().useGravity = false;
 		//body.transform.position = new Vector3 (20, .15f, 0);
 		switch (randpos) {
 		case 0:
 			this.orientation = "up";
 			this.position = "HorizontalLeft";
-			this.body.transform.position = new Vector3 (-10, .15f, -20);
+			this.body.transform.position = new Vector3 (-10, 1f, -20);
 			break;
 		case 1:
 			this.orientation = "down";
 			this.position = "HorizontalMiddle";
-			this.body.transform.position = new Vector3 (0, .15f, 20);
+			this.body.transform.position = new Vector3 (0, 1f, 20);
 			break;
 		case 2:
 			this.orientation = "up";
 			this.position = "HorizontalRight";
-			this.body.transform.position = new Vector3 (10, .15f, -20);
+			this.body.transform.position = new Vector3 (10, 1f, -20);
 			break;
 		case 3:
 			this.orientation = "right";
 			this.position = "VerticalFromLeft";
-			this.body.transform.position = new Vector3 (-20, .15f, 0);
+			this.body.transform.position = new Vector3 (-20, 1f, 0);
 			break;
 		case 4:
 			this.orientation = "left";
 			this.position = "VerticalFromRight";
-			this.body.transform.position = new Vector3 (20, .15f, 0);
+			this.body.transform.position = new Vector3 (20, 1f, 0);
 			break;
 		}
+		print (this.body.transform.position);
 	}
 		
 	/// <summary>
