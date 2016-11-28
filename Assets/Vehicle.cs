@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Vehicle : MonoBehaviour {
 	//ROAD LOCATIONS (for generating vehicles):
@@ -21,7 +22,12 @@ public class Vehicle : MonoBehaviour {
 
 	private Vector3 target;
 	public float speed = 2f;
-		
+	Vector3 priorInt = new Vector3(0,0,0);
+	bool moving = true;
+	int intersectionPause = 0;
+	bool atIntersection = false;
+	bool ignoreNextIntersection = false;
+
 	/// <summary>
 	/// Senses other cars close enough in front.
 	/// </summary>
@@ -71,59 +77,122 @@ public class Vehicle : MonoBehaviour {
 		return decision;
 	}
 
+
+	Vector3 hor1Bot = new Vector3 (-10, .15f, -20);
+	Vector3 hor1Top = new Vector3 (-10, .15f, 20);
+	Vector3 hor2Bot = new Vector3 (0, .15f, -20);
+	Vector3 hor2Top = new Vector3 (0, .15f, 20);
+	Vector3 hor3Bot = new Vector3 (10, .15f, -20);
+	Vector3 hor3Top = new Vector3 (10, .15f, 20);
+	Vector3 verLeft = new Vector3 (-20, .15f, 0);
+	Vector3 verRight = new Vector3 (20, .15f, 0);
+	Vector3 intLeft = new Vector3 (-10, 0.15f, 0);
+	Vector3 intMid = new Vector3 (0, 0.15f, 0);
+	Vector3 intRight = new Vector3 (10, 0.15f, 0);
+	static Vector3 intLeftAbove = new Vector3 (-10, 0.15f, 1.5f);
+	static Vector3 intLeftLeft = new Vector3 (-11.5f, 0.15f, 0);
+	static Vector3 intLeftRight = new Vector3 (-8.5f, 0.15f, 0);
+	static Vector3 intLeftBelow = new Vector3(-10,0.15f,-1.5f);
+	static Vector3 intMidAbove = new Vector3 (0, .15f, 1.5f);
+	static Vector3 intMidLeft = new Vector3 (-1.5f, 0.15f, 0);
+	static Vector3 intMidRight = new Vector3 (1.5f, 0.15f, 0);
+	static Vector3 intMidBelow = new Vector3 (0, .15f, -1.5f);
+	static Vector3 intRightAbove = new Vector3 (10, 0.15f, 1.5f);
+	static Vector3 intRightLeft = new Vector3 (8.5f, 0.15f, 0f);
+	static Vector3 intRightRight = new Vector3 (11.5f, 0.15f, 0f);
+	static Vector3 intRightBelow = new Vector3 (10, 0.15f, -1.5f);
+	Vector3[] nearInts = new Vector3[12] {
+		intLeftAbove,
+		intLeftBelow,
+		intLeftLeft,
+		intLeftRight,
+		intMidAbove,
+		intMidBelow,
+		intMidLeft,
+		intMidRight,
+		intRightAbove,
+		intRightBelow,
+		intRightLeft,
+		intRightRight
+	};
+
 	void AssignTarget(){
 		Vector3 pos = transform.position;
-		if(pos == new Vector3(-10, 0.15f, -20) || pos == new Vector3 (-10, .15f, 20)){
-			target = new Vector3(-10, 0.15f, 0); //Intersection: First and Center
-		}else if(pos == new Vector3 (0, .15f, 20) || pos == new Vector3 (0, .15f, -20)){
-			target = new Vector3(0, 0.15f, 0); //Intersection: Second and Center
-		}else if(pos == new Vector3 (10, .15f, -20) || pos == new Vector3 (10, .15f, 20)){
-			target = new Vector3(10, 0.15f, 0); //Intersection: Third and Center
-		}else if(pos == new Vector3(-10, 0.15f, 0)){
+		if (pos == hor1Top || pos == hor1Bot) {
+			target = intLeft; //Intersection: First and Center
+		} else if (pos == hor2Bot || pos == hor2Top) {
+			target = intMid; //Intersection: Second and Center
+		} else if (pos == hor3Top || pos == hor3Bot) {
+			target = intRight; //Intersection: Third and Center
+		} else if (pos == verLeft) {
+			target = intLeft;
+		} else if (pos == verRight) {
+			target = intRight;
+		} else if(pos == intLeft){
 			//Intersection Decision case: First and Center
 			int randpos = Random.Range (0, 3);
 			switch (randpos) {
-				case 0:
-					target = new Vector3(0, 0.15f, 0); //Intersection: Second and Center
-					break;
-				case 1: 
-					target = new Vector3 (-10, .15f, -20);
-					break;
-				case 2:
-					target = new Vector3 (-10, .15f, 20);
-					break;
+			case 0:
+				target = intMid; //Intersection: Second and Center
+				if (priorInt == intMid || priorInt == intLeft) {
+					target = hor1Bot;
+				}
+				priorInt = intLeft;
+				break;
+			case 1: 
+				target = hor1Bot;
+				break;
+			case 2:
+				target = verLeft;
+				if (priorInt == verLeft || priorInt == intLeft) {
+					target = hor1Bot;
+				}
+				priorInt = intLeft;
+				break;
 			}
-		}else if(pos == new Vector3(0, 0.15f, 0)){
+		} else if(pos == intMid){
 			//Intersection Decision case: Second and Center
-			int randpos = Random.Range (0, 4);
+			int randpos = Random.Range (0, 3);
 			switch (randpos) {
-				case 0:
-					target = new Vector3(-10, 0.15f, 0); //Intersection: First and Center
-					break;
-				case 1: 
-					target = new Vector3(10, 0.15f, 0); //Intersection: Third and Center
-					break;
-				case 2:
-					target = new Vector3 (0, .15f, 20);
-					break;
-				case 3:
-					target = new Vector3 (0, .15f, -20);
-					break;
+			case 0:
+				target = intLeft; //Intersection: First and Center
+				if (priorInt == intLeft || priorInt == intMid) {
+					target = intRight;
+				}
+				priorInt = intMid;
+				break;
+			case 1: 
+				target = intRight; //Intersection: Third and Center
+				if (priorInt == intRight || priorInt == intMid) {
+					target = intLeft;
+				}
+				priorInt = intMid;
+				break;
+			case 2:
+				target = hor2Top;
+				break;
 			}
-
-		}else if(pos == new Vector3(10, 0.15f, 0)){
+		}else if(pos == intRight){
 			//Intersection Decision case: Third and Center
 			int randpos = Random.Range (0, 3);
 			switch (randpos) {
-				case 0:
-					target = new Vector3(0, 0.15f, 0); //Intersection: Second and Center
-					break;
-				case 1: 
-					target = new Vector3 (10, .15f, -20);
-					break;
-				case 2:
-					target = new Vector3 (10, .15f, 20);
-					break;
+			case 0:
+				target = intMid; //Intersection: Second and Center
+				if (priorInt == intMid || priorInt == intRight) {
+					target = hor3Bot;
+				}
+				priorInt = intRight;
+				break;
+			case 1: 
+				target = hor3Bot;
+				break;
+			case 2:
+				target = verRight;
+				if (priorInt == verRight || priorInt == intRight) {
+					target = hor3Bot;
+				}
+				priorInt = intRight;
+				break;
 			}
 		}
 	}
@@ -133,31 +202,87 @@ public class Vehicle : MonoBehaviour {
 		int randpos = Random.Range (0, 5);
 		switch (randpos) {
 		case 0:
-			transform.position = new Vector3 (-10, .15f, -20); //1
+			transform.position = hor1Top; //1
 			break;
 		case 1:
-			transform.position = new Vector3 (0, .15f, 20); //2
+			transform.position = hor2Bot; //2
 			break;
 		case 2:
-			transform.position = new Vector3 (10, .15f, -20); //3
+			transform.position = verLeft; //3
+			priorInt = verLeft;
 			break;
 		case 3:
-			transform.position = new Vector3 (-10, .15f, 20); //1
+			transform.position = verRight; //1
+			priorInt = verRight;
 			break; 
 		case 4:
-			transform.position = new Vector3 (0, .15f, -20); //2
-			break;
-		case 5:
-			transform.position = new Vector3 (10, .15f, 20); //3
+			transform.position = hor3Top; //3
 			break;
 		}
 		AssignTarget();
+	}
+
+	void CheckIntersection(){
+		Vector3 pos = transform.position;
+		for (int i = 0; i < nearInts.Length; i++) {	
+			if(Mathf.Abs(Vector3.Distance(pos,nearInts[i])) <= .1f){
+				atIntersection = true;
+				//if (!ignoreNextIntersection) {
+					//moving = false;
+				//}
+				//ignoreNextIntersection = !ignoreNextIntersection;
+			}
+		}
+	}
+
+	void CheckReplace(){
+		bool reset = false;
+		Vector3 pos = transform.position;
+		if (pos == hor1Bot || pos == hor1Top) {
+			reset = true;
+		} else if (pos == hor2Bot || pos == hor2Top) {
+			reset = true;
+		} else if (pos == hor3Bot || pos == hor3Top) {
+			reset = true;
+		} else if (pos == verLeft || pos == verRight) {
+			reset = true;
+		}
+		if (reset) {
+			int randpos = Random.Range (0, 5);
+			switch (randpos) {
+			case 0:
+				transform.position = hor1Top; //1
+				break;
+			case 1:
+				transform.position = hor2Bot; //2
+				break;
+			case 2:
+				priorInt = verLeft;
+				transform.position = verLeft; //3
+				break;
+			case 3:
+				priorInt = verRight;
+				transform.position = verRight; //1
+				break; 
+			case 4:
+				transform.position = hor3Top; //3
+				break;
+			}
+		}
+		AssignTarget ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		transform.LookAt(target);
-		transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-		AssignTarget();
+		if (!atIntersection || intersectionPause > 15) {
+			atIntersection = false;
+			transform.position = Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime);
+			AssignTarget ();
+		} else {
+			intersectionPause++;
+		}
+		CheckIntersection ();
+		CheckReplace ();
 	}
 }

@@ -10,7 +10,7 @@ public class RunIntersection : MonoBehaviour {
 	void Start () {
 		pedestrians = new ArrayList ();
 		vehicles = new ArrayList ();
-		Pedestrian s = new Pedestrian ();
+		//Pedestrian s = new Pedestrian ();
 	}
 	
 	// Update is called once per frame
