@@ -141,6 +141,7 @@ public class Vehicle : MonoBehaviour {
 				break;
 			case 1: 
 				target = hor1Bot;
+				priorInt = intLeft;
 				break;
 			case 2:
 				target = verLeft;
@@ -170,6 +171,7 @@ public class Vehicle : MonoBehaviour {
 				break;
 			case 2:
 				target = hor2Top;
+				priorInt = intMid;
 				break;
 			}
 		}else if(pos == intRight){
@@ -185,6 +187,7 @@ public class Vehicle : MonoBehaviour {
 				break;
 			case 1: 
 				target = hor3Bot;
+				priorInt = intRight;
 				break;
 			case 2:
 				target = verRight;
@@ -226,7 +229,12 @@ public class Vehicle : MonoBehaviour {
 		Vector3 pos = transform.position;
 		for (int i = 0; i < nearInts.Length; i++) {	
 			if(Mathf.Abs(Vector3.Distance(pos,nearInts[i])) <= .1f){
-				atIntersection = true;
+				if ((nearInts [i] == intLeftAbove || nearInts [i] == intLeftBelow || nearInts [i] == intLeftLeft || nearInts [i] == intLeftRight) && priorInt == intLeft) {
+				} else if ((nearInts [i] == intMidAbove || nearInts [i] == intMidBelow || nearInts [i] == intMidLeft || nearInts [i] == intMidRight) && priorInt == intMid) {
+				} else if ((nearInts [i] == intRightAbove || nearInts [i] == intRightBelow || nearInts [i] == intRightLeft || nearInts [i] == intRightRight) && priorInt == intRight) {
+				} else {
+					atIntersection = true;
+				}
 				//if (!ignoreNextIntersection) {
 					//moving = false;
 				//}
@@ -275,10 +283,14 @@ public class Vehicle : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		transform.LookAt(target);
-		if (!atIntersection || intersectionPause > 15) {
+		if (!atIntersection || intersectionPause > 15 ) {
+			if (atIntersection) {
+				ignoreNextIntersection = true;
+			}
 			atIntersection = false;
 			transform.position = Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime);
 			AssignTarget ();
+			intersectionPause = 0;
 		} else {
 			intersectionPause++;
 		}
