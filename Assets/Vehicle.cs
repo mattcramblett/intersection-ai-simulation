@@ -25,8 +25,11 @@ public class Vehicle : MonoBehaviour {
 	Vector3 priorInt = new Vector3(0,0,0);
 	bool moving = true;
 	int intersectionPause = 0;
-	bool atIntersection = false;
+	public bool atIntersection = false;
 	bool ignoreNextIntersection = false;
+	int numberOfCars = 2;
+	int carNum;
+	List<GameObject> carList = new List<GameObject> ();
 
 	/// <summary>
 	/// Senses other cars close enough in front.
@@ -202,6 +205,17 @@ public class Vehicle : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		for (int i = 1; i <= numberOfCars; i++) {
+			string thisnum = this.ToString ();
+			thisnum = thisnum.Substring (3,1);
+			if (i.ToString () != thisnum) {
+				carList.Add (GameObject.Find ("car" + i.ToString ()));
+			} else {
+				carNum = i;
+			}
+		}
+			
 		int randpos = Random.Range (0, 5);
 		switch (randpos) {
 		case 0:
@@ -221,6 +235,42 @@ public class Vehicle : MonoBehaviour {
 		case 4:
 			transform.position = hor3Top; //3
 			break;
+		}
+		bool validPosition = true;
+		foreach (GameObject car in carList) {
+			if (Vector3.Distance (car.transform.position, this.transform.position) < 1) {
+				validPosition = false;
+			}
+		}
+		if (!validPosition) {
+			while (!validPosition) {
+				int newpos = Random.Range (0, 5);
+				switch (newpos) {
+				case 0:
+					transform.position = hor1Top; //1
+					break;
+				case 1:
+					transform.position = hor2Bot; //2
+					break;
+				case 2:
+					transform.position = verLeft; //3
+					priorInt = verLeft;
+					break;
+				case 3:
+					transform.position = verRight; //1
+					priorInt = verRight;
+					break; 
+				case 4:
+					transform.position = hor3Top; //3
+					break;
+				}
+				validPosition = true;
+				foreach (GameObject car in carList) {
+					if (Vector3.Distance (car.transform.position, this.transform.position) < 1) {
+						validPosition = false;
+					}
+				}
+			}
 		}
 		AssignTarget();
 	}
@@ -256,13 +306,16 @@ public class Vehicle : MonoBehaviour {
 			reset = true;
 		}
 		if (reset) {
+			ignoreNextIntersection = false;
 			int randpos = Random.Range (0, 5);
 			switch (randpos) {
 			case 0:
 				transform.position = hor1Top; //1
+				priorInt = new Vector3(-1,-1,-1);
 				break;
 			case 1:
 				transform.position = hor2Bot; //2
+				priorInt = new Vector3(-1,-1,-1);
 				break;
 			case 2:
 				priorInt = verLeft;
@@ -274,18 +327,78 @@ public class Vehicle : MonoBehaviour {
 				break; 
 			case 4:
 				transform.position = hor3Top; //3
+				priorInt = new Vector3(-1,-1,-1);
 				break;
+			}
+		}
+		bool validPosition = true;
+		foreach (GameObject car in carList) {
+			if (Vector3.Distance (car.transform.position, this.transform.position) < 1) {
+				validPosition = false;
+			}
+		}
+		if (!validPosition) {
+			while (!validPosition) {
+				int newpos = Random.Range (0, 5);
+				switch (newpos) {
+				case 0:
+					transform.position = hor1Top; //1
+					break;
+				case 1:
+					transform.position = hor2Bot; //2
+					break;
+				case 2:
+					transform.position = verLeft; //3
+					priorInt = verLeft;
+					break;
+				case 3:
+					transform.position = verRight; //1
+					priorInt = verRight;
+					break; 
+				case 4:
+					transform.position = hor3Top; //3
+					break;
+				}
+				validPosition = true;
+				foreach (GameObject car in carList) {
+					if (Vector3.Distance (car.transform.position, this.transform.position) < 1) {
+						validPosition = false;
+					}
+				}
 			}
 		}
 		AssignTarget ();
 	}
-	
+
+	List<GameObject> carsAtIntersection = new List<GameObject>();
+	int CheckOthers(){
+		Vector3 pos = transform.position;
+		foreach (GameObject car in carList) {
+			Vector3 carPos = car.transform.position;
+			if (carPos == intLeftAbove || carPos == intLeftBelow || carPos == intLeftLeft || carPos == intLeftRight || Mathf.Abs(Vector2.Distance(carPos,intLeft)) < 1) {
+				if (pos == intLeftAbove || pos == intLeftBelow || pos == intLeftLeft || pos == intLeftRight) {
+					print ("wait!!");
+				}
+			} else if(carPos == intMidAbove || carPos == intMidBelow || carPos == intMidLeft || carPos == intMidRight || Mathf.Abs(Vector2.Distance(carPos,intMid)) < 1){
+				if (pos == intMidAbove || pos == intMidBelow || pos == intMidLeft || pos == intMidRight) {
+					print ("wait!!");
+				}
+			} else if(carPos == intRightAbove || carPos == intRightBelow || carPos == intRightLeft || carPos == intRightLeft || Mathf.Abs(Vector2.Distance(carPos,intRight)) < 1){
+				if (pos == intRightAbove || pos == intRightBelow || pos == intRightLeft || pos == intRightRight) {
+					print ("wait!!");
+				}
+			}
+		}
+		return 0;
+	}
+
 	// Update is called once per frame
 	void Update () {
 		transform.LookAt(target);
-		if (!atIntersection || intersectionPause > 15 ) {
+		if (!atIntersection || intersectionPause > 10 ) {
 			if (atIntersection) {
 				ignoreNextIntersection = true;
+				CheckOthers ();
 			}
 			atIntersection = false;
 			transform.position = Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime);
