@@ -20,7 +20,8 @@ public class Vehicle : MonoBehaviour {
 	//Stopping points at intersections are 1.5 units from middle of intersection (in whichever direction car is coming from)
 	//Catmull-Rom curve should be from this place to 
 
-	private Vector3 target;
+	public Vector3 target;
+	int frameCount = 0;
 	public float speed = 2f;
 	Vector3 priorInt = new Vector3(0,0,0);
 	bool moving = true;
@@ -31,26 +32,63 @@ public class Vehicle : MonoBehaviour {
 	int numberOfCars = 11;
 	int carNum;
 	List<GameObject> carList = new List<GameObject> ();
+	Vector3 previousPosition = new Vector3 (-1, -1, -1);
+	int previousPositionCount = 0;
 
 	/// <summary>
 	/// Senses other cars close enough in front.
 	/// </summary>
 	/// <returns><c>true</c>, if cars are sensed, <c>false</c> otherwise.</returns>
+	public string objectInWay;
 	bool senseCars(){
+		Vector3 pos = transform.position;
+		foreach (GameObject car in carList) {
+			if (car != null) {
+				Vector3 heading = car.transform.position - pos;
+				Vector3 standardizedHeading = heading / heading.magnitude;
+				float distance = heading.magnitude;
+			//	print ("Distance between car " + carNum + " and " + car.name + ": " + distance);
+				if (distance < 1.5 && distance > 0 /*&& standardizedHeading == forward*/){
+					/*if (Mathf.Abs (Vector3.Distance (pos, hor1Bot)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, hor1Top)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, verLeft)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, verRight)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, hor2Bot)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, hor2Top)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, hor3Bot)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, hor3Top)) < 1.5f) {
+						return false;
+					} else {
+						return true;
+					}*/
+					
+					if (standardizedHeading == forward) {
+						clearPath = false;
+						objectInWay = car.name;
+					} else {
+						objectInWay = "";
+						clearPath = true;
+					}
+					return true;
+					//print ("standardized heading: " + standardizedHeading + " , forward: " + forward);
+				}
+			}
+		}
+		return false;
+	}
+
+	void checkAhead(){
 		Vector3 pos = transform.position;
 		foreach (GameObject car in carList) {
 			if (car != null) {
 				Vector3 heading = pos - car.transform.position;
 				Vector3 standardizedHeading = heading / heading.magnitude;
 				float distance = heading.magnitude;
-				if (distance < 1.5 && distance > 0 /*&& standardizedHeading == forward*/) {
+				if (distance < 1.5 && distance > 0 && standardizedHeading == forward){
+					/*if (Mathf.Abs (Vector3.Distance (pos, hor1Bot)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, hor1Top)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, verLeft)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, verRight)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, hor2Bot)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, hor2Top)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, hor3Bot)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, hor3Top)) < 1.5f) {
+						return false;
+					} else {
+						return true;
+					}*/
+					clearPath = true;
 					//print ("standardized heading: " + standardizedHeading + " , forward: " + forward);
 					//print ("car " + carNum + " is approaching " + car.name + " at distance " + distance + " and heading " + heading + " , forward: " + forward );
-					return true;
 				}
 			}
 		}
-		return false;
 	}
 
 	/// <summary>
@@ -124,24 +162,24 @@ public class Vehicle : MonoBehaviour {
 		intRightLeft,
 		intRightRight
 	};
-	Vector3 forward = new Vector3(-1,-1,-1);
+	public Vector3 forward = new Vector3(-1,-1,-1);
 
 	void AssignTarget(){
 		Vector3 pos = transform.position;
 		if (pos == hor1Top || pos == hor1Bot) {
 			target = intLeft; //Intersection: First and Center
-			forward = -1*transform.forward;
+			forward = new Vector3(0,0,-1);
 		} else if (pos == hor2Bot || pos == hor2Top) {
 			target = intMid; //Intersection: Second and Center
-			forward = transform.forward;
+			forward = new Vector3(0,0,1);
 		} else if (pos == hor3Top || pos == hor3Bot) {
 			target = intRight; //Intersection: Third and Center
-			forward = -1*transform.forward;
+			forward = new Vector3(0,0,-1);
 		} else if (pos == verLeft) {
-			forward = transform.right;
+			forward = new Vector3(1,0,0);
 			target = intLeft;
 		} else if (pos == verRight) {
-			forward = -1 * transform.right;
+			forward = new Vector3(-1,0,0);
 			target = intRight;
 		} else if(pos == intLeft){
 			//Intersection Decision case: First and Center
@@ -149,23 +187,23 @@ public class Vehicle : MonoBehaviour {
 			switch (randpos) {
 			case 0:
 				target = intMid; //Intersection: Second and Center
-				forward = transform.right;
+				forward = new Vector3(1,0,0);
 				if (priorInt == intMid || priorInt == intLeft) {
-					forward = -1 * transform.forward;
+					forward = new Vector3(0,0,-1);
 					target = hor1Bot;
 				}
 				priorInt = intLeft;
 				break;
 			case 1: 
-				forward = -1 * transform.forward;
+				forward = new Vector3(0,0,-1);
 				target = hor1Bot;
 				priorInt = intLeft;
 				break;
 			case 2:
 				target = verLeft;
-				forward = -1 * transform.right;
+				forward = new Vector3(-1,0,0);
 				if (priorInt == verLeft || priorInt == intLeft) {
-					forward = -1 * transform.forward;
+					forward = new Vector3(0,0,-1);
 					target = hor1Bot;
 				}
 				priorInt = intLeft;
@@ -177,25 +215,25 @@ public class Vehicle : MonoBehaviour {
 			switch (randpos) {
 			case 0:
 				target = intLeft; //Intersection: First and Center
-				forward = -1*transform.right;
+				forward = new Vector3(-1,0,0);
 				if (priorInt == intLeft || priorInt == intMid) {
 					target = intRight;
-					forward = transform.right;
+					forward = new Vector3(1,0,0);
 				}
 				priorInt = intMid;
 				break;
 			case 1: 
 				target = intRight; //Intersection: Third and Center
-				forward = transform.right;
+				forward = new Vector3(1,0,0);
 				if (priorInt == intRight || priorInt == intMid) {
 					target = intLeft;
-					forward = -1 * transform.right;
+					forward = new Vector3(-1,0,0);
 				}
 				priorInt = intMid;
 				break;
 			case 2:
 				target = hor2Top;
-				forward = transform.forward;
+				forward = new Vector3(0,0,1);
 				priorInt = intMid;
 				break;
 			}
@@ -205,24 +243,24 @@ public class Vehicle : MonoBehaviour {
 			switch (randpos) {
 			case 0:
 				target = intMid; //Intersection: Second and Center
-				forward = -1 * transform.right;
+				forward = new Vector3(-1,0,0);
 				if (priorInt == intMid || priorInt == intRight) {
 					target = hor3Bot;
-					forward = -1 * transform.forward;
+					forward = new Vector3(0,0,-1);
 				}
 				priorInt = intRight;
 				break;
 			case 1: 
 				target = hor3Bot;
-				forward = -1 * transform.forward;
+				forward = new Vector3(0,0,-1);
 				priorInt = intRight;
 				break;
 			case 2:
 				target = verRight;
-				forward = transform.right;
+				forward = new Vector3(1,0,0);
 				if (priorInt == verRight || priorInt == intRight) {
 					target = hor3Bot;
-					forward = -1 * transform.forward;
+					forward = new Vector3(0,0,-1);
 				}
 				priorInt = intRight;
 				break;
@@ -362,8 +400,11 @@ public class Vehicle : MonoBehaviour {
 	}
 		
 	float pauseLength = 0;
+	public bool clearPath = true;
+	public bool stuck = false;
 	// Update is called once per frame
 	void Update () {
+		bool moved = false;
 		//if current position is starting point, check distance to other cars. if close, don't move. otherwise move normal
 		Vector3 pos = transform.position;
 		if (pauseLength <= 1) {
@@ -371,11 +412,13 @@ public class Vehicle : MonoBehaviour {
 			if (!atIntersection || intersectionPause > 10) {
 				if (atIntersection) {
 					ignoreNextIntersection = true;
-					CheckOthers ();
+					//CheckOthers ();
 				}
 				atIntersection = false;
-				if (!senseCars () || true) {
+				bool sensor = senseCars ();
+				if (!sensor || (clearPath && frameCount > 30)) {
 					transform.position = Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime);
+					moved = true;
 				} else {
 				}
 				AssignTarget ();
@@ -398,5 +441,26 @@ public class Vehicle : MonoBehaviour {
 				}
 			}
 		}
+		if (this.transform.position == previousPosition) {
+			previousPositionCount++;
+		} else {
+			previousPositionCount = 0;
+			stuck = false;
+		}
+		previousPosition = this.transform.position;
+		if (previousPositionCount >= 150) {
+			stuck = true;
+			/*if (stuck) {
+				if (transform.position.x > 9) {
+					target = hor3Bot;
+				} else if (transform.position.x < 5 && transform.position.x > -5) {
+					target = hor2Top;
+				} else if (transform.position.x < -5) {
+					target = hor1Bot;
+				}
+			}*/
+		}
+
+		frameCount++;
 	}
 }
