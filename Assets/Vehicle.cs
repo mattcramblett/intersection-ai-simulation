@@ -27,7 +27,7 @@ public class Vehicle : MonoBehaviour {
 	int intersectionPause = 0;
 	public bool atIntersection = false;
 	bool ignoreNextIntersection = false;
-	int numberOfCars = 2;
+	int numberOfCars = 5;
 	int carNum;
 	List<GameObject> carList = new List<GameObject> ();
 
@@ -237,7 +237,7 @@ public class Vehicle : MonoBehaviour {
 			break;
 		}
 		bool validPosition = true;
-		foreach (GameObject car in carList) {
+		/*foreach (GameObject car in carList) {
 			if (Vector3.Distance (car.transform.position, this.transform.position) < 1) {
 				validPosition = false;
 			}
@@ -271,7 +271,7 @@ public class Vehicle : MonoBehaviour {
 					}
 				}
 			}
-		}
+		}*/
 		AssignTarget();
 	}
 
@@ -331,7 +331,7 @@ public class Vehicle : MonoBehaviour {
 				break;
 			}
 		}
-		bool validPosition = true;
+	/*	bool validPosition = true;
 		foreach (GameObject car in carList) {
 			if (Vector3.Distance (car.transform.position, this.transform.position) < 1) {
 				validPosition = false;
@@ -366,7 +366,7 @@ public class Vehicle : MonoBehaviour {
 					}
 				}
 			}
-		}
+		}*/
 		AssignTarget ();
 	}
 
@@ -398,7 +398,7 @@ public class Vehicle : MonoBehaviour {
 		if (!atIntersection || intersectionPause > 10 ) {
 			if (atIntersection) {
 				ignoreNextIntersection = true;
-				CheckOthers ();
+				//CheckOthers ();
 			}
 			atIntersection = false;
 			transform.position = Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime);
