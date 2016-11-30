@@ -1,0 +1,82 @@
+﻿the way to get unstuck involves a slight jump in the car position but I think it's better than the cars being stuck for several frames until another car appears
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch Matt
+# Your branch is up-to-date with 'origin/Matt'.
+#
+# Changes to be committed:
+#	modified:   Assembly-CSharp-Editor.csproj
+#	modified:   Assembly-CSharp.csproj
+#	new file:   Assets/Area730/Stylized city/Prefabs/Aircraft.meta
+#	new file:   Assets/Area730/Stylized city/Prefabs/War_tecknology/Bombs_rockets.meta
+#	new file:   Assets/Area730/Stylized city/Prefabs/stones.meta
+#	modified:   Assets/Vehicle.cs
+#	modified:   Library/AssetImportState
+#	modified:   Library/AssetServerCacheV3
+#	deleted:    Library/CrashedAssetImports.txt
+#	modified:   Library/CurrentLayout.dwlt
+#	modified:   Library/EditorUserBuildSettings.asset
+#	modified:   Library/ProjectSettings.asset
+#	modified:   Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+#	modified:   Library/ScriptAssemblies/Assembly-CSharp-Editor.dll.mdb
+#	modified:   Library/ScriptAssemblies/Assembly-CSharp.dll
+#	modified:   Library/ScriptAssemblies/Assembly-CSharp.dll.mdb
+#	modified:   Library/ScriptAssemblies/BuiltinAssemblies.stamp
+#	modified:   Library/ScriptMapper
+#	modified:   Library/assetDatabase3
+#	modified:   Library/expandedItems
+#	modified:   Library/metadata/00/00000000000000002000000000000000
+#	modified:   Library/metadata/00/00000000000000003000000000000000
+#	modified:   Library/metadata/00/00000000000000004000000000000000
+#	modified:   Library/metadata/00/00000000000000004100000000000000
+#	modified:   Library/metadata/00/00000000000000005000000000000000
+#	modified:   Library/metadata/00/00000000000000005100000000000000
+#	modified:   Library/metadata/00/00000000000000006000000000000000
+#	modified:   Library/metadata/00/00000000000000006100000000000000
+#	modified:   Library/metadata/00/00000000000000007000000000000000
+#	modified:   Library/metadata/00/00000000000000007100000000000000
+#	modified:   Library/metadata/00/00000000000000008000000000000000
+#	modified:   Library/metadata/00/00000000000000008100000000000000
+#	modified:   Library/metadata/00/00000000000000009000000000000000
+#	modified:   Library/metadata/00/0000000000000000a000000000000000
+#	modified:   Library/metadata/00/0000000000000000a100000000000000
+#	modified:   Library/metadata/00/0000000000000000b000000000000000
+#	modified:   Library/metadata/00/0000000000000000c000000000000000
+#	new file:   Library/metadata/13/13f4ddee8aaf36a47994137ce3e6ae41
+#	new file:   Library/metadata/13/13f4ddee8aaf36a47994137ce3e6ae41.info
+#	modified:   Library/metadata/22/22490d76469b54e8fb50962b83c91e0e
+#	modified:   Library/metadata/3c/3c0ad459c1534645b5d603b7cc258f97
+#	new file:   Library/metadata/4e/4ee9c02f6da34ea4aaeab01433a479cd
+#	new file:   Library/metadata/4e/4ee9c02f6da34ea4aaeab01433a479cd.info
+#	modified:   Library/metadata/53/536d02f56ec57e34ea043ea6bd2784f9
+#	modified:   Library/metadata/5f/5f32cd94baa94578a686d4b9d6b660f7
+#	modified:   Library/metadata/73/739bbd9f364b4268874f9fd86ab3beef
+#	modified:   Library/metadata/7c/7cbab2be89b54486bbd23a6fe637d30e
+#	modified:   Library/metadata/80/80a3616ca19596e4da0f10f14d241e9f
+#	modified:   Library/metadata/85/852e56802eb941638acbb491814497b0
+#	modified:   Library/metadata/87/870353891bb340e2b2a9c8707e7419ba
+#	modified:   Library/metadata/8e/8e0cd8ed44d4412cbe0642067abc9e44
+#	modified:   Library/metadata/97/97decbdab0634cdd991f8d23ddf0dead
+#	modified:   Library/metadata/ad/adebbd281f1a4ef3a30be7f21937e02f
+#	new file:   Library/metadata/b5/b521866fac270794987e8697769f67b1
+#	new file:   Library/metadata/b5/b521866fac270794987e8697769f67b1.info
+#	modified:   Library/metadata/d5/d5c5f60c9e47f7647b271098c5f83289
+#	modified:   Library/metadata/f5/f5f67c52d1564df4a8936ccd202a3bd8
+#	modified:   ProjectSettings/ProjectSettings.asset
+#	modified:   ProjectSettings/ProjectVersion.txt
+#	deleted:    Temp/UnityLockfile
+#	modified:   intersection-ai-simulation.userprefs
+#
+# Changes not staged for commit:
+#	deleted:    Temp/ProcessJobs/e9a6970f79cd12d8b075e7d72f1b07cb.bakert
+#	deleted:    Temp/UnityTempFile-9af55d077968a43cbb23ab813977d03e
+#	deleted:    Temp/UnityTempFile-c34a741811ae14c47a6352f034178d47
+#	deleted:    Temp/UnityTempFile-f26a5cc9750944af19fd6e9b5a37f7a1
+#	deleted:    Temp/UnityTempFile-ff78de02b65e64312892cc75fbce24ff
+#	deleted:    Temp/__Backupscenes/0.backup
+#
+# Untracked files:
+#	pzwj0aa5.msu.txt
+#	q2czopoi.agj.txt
+#
+

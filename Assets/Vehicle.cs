@@ -24,7 +24,6 @@ public class Vehicle : MonoBehaviour {
 	int frameCount = 0;
 	public float speed = 2f;
 	Vector3 priorInt = new Vector3(0,0,0);
-	bool moving = true;
 	int intersectionPause = 0;
 	public bool atIntersection = false;
 	bool ignoreNextIntersection = false;
@@ -69,61 +68,6 @@ public class Vehicle : MonoBehaviour {
 		}
 		return false;
 	}
-
-	void checkAhead(){
-		Vector3 pos = transform.position;
-		foreach (GameObject car in carList) {
-			if (car != null) {
-				Vector3 heading = pos - car.transform.position;
-				Vector3 standardizedHeading = heading / heading.magnitude;
-				float distance = heading.magnitude;
-				if (distance < 1.5 && distance > 0 && standardizedHeading == forward){
-					/*if (Mathf.Abs (Vector3.Distance (pos, hor1Bot)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, hor1Top)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, verLeft)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, verRight)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, hor2Bot)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, hor2Top)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, hor3Bot)) < 1.5f || Mathf.Abs (Vector3.Distance (pos, hor3Top)) < 1.5f) {
-						return false;
-					} else {
-						return true;
-					}*/
-					clearPath = true;
-					//print ("standardized heading: " + standardizedHeading + " , forward: " + forward);
-					//print ("car " + carNum + " is approaching " + car.name + " at distance " + distance + " and heading " + heading + " , forward: " + forward );
-				}
-			}
-		}
-	}
-
-	/// <summary>
-	/// Turn at intersection.
-	/// </summary>
-	void Turn(){
-		//catmull-rom curve interpolation from current point, which should be intersection centers +/- 1.5 to the next intersection
-	}
-
-	Vehicle generate(){
-		Vehicle v = new Vehicle ();
-		return v;
-	}
-
-	/// <summary>
-	/// Chooses what to do at an intersection (turn or continue forwards)
-	/// </summary>
-	/// <returns>The decision.</returns>
-	string IntersectionDecision(){
-		var number = Random.Range (0, 3);//[x,y)
-		string decision = "";
-		switch (number) {
-		case 0:
-			decision = "straight";
-			break;
-		case 1:
-			decision = "left";
-			break;
-		case 2:
-			decision = "right";
-			break;
-		}
-		return decision;
-	}
-
 
 	Vector3 hor1Bot = new Vector3 (-10, .15f, -20);
 	Vector3 hor1Top = new Vector3 (-10, .15f, 20);
@@ -404,7 +348,6 @@ public class Vehicle : MonoBehaviour {
 	public bool stuck = false;
 	// Update is called once per frame
 	void Update () {
-		bool moved = false;
 		//if current position is starting point, check distance to other cars. if close, don't move. otherwise move normal
 		Vector3 pos = transform.position;
 		if (pauseLength <= 1) {
@@ -418,7 +361,6 @@ public class Vehicle : MonoBehaviour {
 				bool sensor = senseCars ();
 				if (!sensor || (clearPath && frameCount > 30)) {
 					transform.position = Vector3.MoveTowards (transform.position, target, speed * Time.deltaTime);
-					moved = true;
 				} else {
 				}
 				AssignTarget ();
@@ -450,15 +392,21 @@ public class Vehicle : MonoBehaviour {
 		previousPosition = this.transform.position;
 		if (previousPositionCount >= 150) {
 			stuck = true;
-			/*if (stuck) {
-				if (transform.position.x > 9) {
+			if (stuck) {
+				if (Mathf.Abs(Vector3.Distance(transform.position,intRight)) < 2) {
+					transform.position = intRightBelow;
+					stuck = false;
 					target = hor3Bot;
-				} else if (transform.position.x < 5 && transform.position.x > -5) {
+				} else if (Mathf.Abs(Vector3.Distance(transform.position,intMid)) < 2) {
+					transform.position = intMidAbove;
+					stuck = false;
 					target = hor2Top;
-				} else if (transform.position.x < -5) {
+				} else if (Mathf.Abs(Vector3.Distance(transform.position,intLeft)) < 2) {
+					transform.position = intLeftBelow;
+					stuck = false;
 					target = hor1Bot;
 				}
-			}*/
+			}
 		}
 
 		frameCount++;
