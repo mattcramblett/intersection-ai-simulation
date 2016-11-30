@@ -98,6 +98,7 @@ public class Pedestrian : MonoBehaviour {
 	//hard coded, but the overall pattern will simulate random movement
 	void AssignTarget(){
 		Vector3 pos = transform.position;
+		int rando = Random.Range(0, 4);
 		if(pos == a) {target = b;} //endpoints
 		else if(pos == h) {target = g;}
 		else if(pos == i) {target = j;}
@@ -114,20 +115,101 @@ public class Pedestrian : MonoBehaviour {
 		else if(pos == endFiveM) {target = m;}
 		else if(pos == endSixN) {target = n;}
 		else if(pos == endSixO) {target = o;}
-		else if(pos == b) {target = c;} //non-endpoints
-		else if(pos == c) {target = k;}
-		else if(pos == d) {target = e;}
-		else if(pos == e) {target = f;}
-		else if(pos == f) {target = n;}
-		else if(pos == g) {target = f;}
-		else if(pos == j) {target = endFourJ;}
-		else if(pos == k) {target = j;}
-		else if(pos == l) {target = d;}
-		else if(pos == m) {target = e;}
-		else if(pos == n) {target = m;}
-		else if(pos == o) {target = endSixO;}
+		else if(pos == b) { //non endpoints
+			switch(rando){
+				case 0: target = endOneB; break;
+				case 1: target = a; break;
+				case 2: target = j; break;
+				case 3: target = c; break;
+			}} //non-endpoints
+		else if(pos == c) {
+			switch(rando){
+				case 0: target = endOneC; break;
+				case 1: target = b; break;
+				case 2: target = k; break;
+				case 3: target = d; break;
+			}}
+		else if(pos == d) {
+			switch(rando){
+				case 0: target = endTwoD; break;
+				case 1: target = l; break;
+				case 2: target = e; break;
+				case 3: target = c; break;
+			}}
+		else if(pos == e) {
+			switch(rando){
+				case 0: target = endTwoE; break;
+				case 1: target = d; break;
+				case 2: target = f; break;
+				case 3: target = m; break;
+			}}
+		else if(pos == f) {
+			switch(rando){
+				case 0: target = endThreeF; break;
+				case 1: target = g; break;
+				case 2: target = e; break;
+				case 3: target = n; break;
+			}}
+		else if(pos == g) {
+			switch(rando){
+				case 0: target = endThreeG; break;
+				case 1: target = h; break;
+				case 2: target = f; break;
+				case 3: target = o; break;
+			}}
+		else if(pos == j) {
+			switch(rando){
+				case 0: target = endFourJ; break;
+				case 1: target = i; break;
+				case 2: target = b; break;
+				case 3: target = k; break;
+			}}
+		else if(pos == k) {
+			switch(rando){
+				case 0: target = endFourK; break;
+				case 1: target = j; break;
+				case 2: target = c; break;
+				case 3: target = l; break;
+			}}
+		else if(pos == l) {
+			switch(rando){
+				case 0: target = endFiveL; break;
+				case 1: target = k; break;
+				case 2: target = m; break;
+				case 3: target = d; break;
+			}}
+		else if(pos == m) {
+			switch(rando){
+				case 0: target = endFiveM; break;
+				case 1: target = l; break;
+				case 2: target = e; break;
+				case 3: target = n; break;
+			}}
+		else if(pos == n) {
+			switch(rando){
+				case 0: target = endSixN; break;
+				case 1: target = o; break;
+				case 2: target = f; break;
+				case 3: target = m; break;
+			}}
+		else if(pos == o) {
+			switch(rando){
+				case 0: target = endSixO; break;
+				case 1: target = p; break;
+				case 2: target = g; break;
+				case 3: target = n; break;
+			}}
 		//note: any changes to the above pattern should avoid infinite loops
 	}
+
+	//sidewalk position based on grid of blocks:
+	//	   end1   end2    end3
+	//	    ||	   ||	   ||
+	// a   b c    d e     f g    h
+	//   -- || --  || ---  || -- 
+	// i   j k    l m     n o    p
+	//		||	   ||	   ||
+	//     end4   end5    end6
 
 	//returns true if a car is nearby
 	//this is meant for checking for nearby cars when assigning a new

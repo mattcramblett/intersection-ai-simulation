@@ -47,8 +47,6 @@
   <ItemGroup>
      <Compile Include="Assets\LayoutDocumentation.cs" />
      <Compile Include="Assets\Pedestrian.cs" />
-     <Compile Include="Assets\RunIntersection.cs" />
-     <Compile Include="Assets\TestVehicle.cs" />
      <Compile Include="Assets\Vehicle.cs" />
      <None Include="Assets\laxer tree pkg\README.txt" />
  <Reference Include="UnityEngine.Analytics">
